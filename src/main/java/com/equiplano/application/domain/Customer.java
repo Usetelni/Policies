@@ -14,7 +14,7 @@ import javax.persistence.Table;
 import com.equiplano.application.domain.base.DomainModel;
 
 @Entity
-@Table(name = "cliente")
+@Table(name = "clientes")
 public class Client extends DomainModel<Client> {
 
 	private static final long serialVersionUID = -5203930890027185670L;

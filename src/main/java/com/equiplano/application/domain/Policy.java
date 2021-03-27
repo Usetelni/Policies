@@ -15,7 +15,7 @@ import javax.persistence.Table;
 import com.equiplano.application.domain.base.DomainModel;
 
 @Entity
-@Table(name = "apolice")
+@Table(name = "apolices")
 public class Policy extends DomainModel<Policy> {
 
 	private static final long serialVersionUID = 8303858629788568223L;
