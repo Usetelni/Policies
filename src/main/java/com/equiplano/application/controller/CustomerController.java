@@ -8,24 +8,39 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.equiplano.application.domain.Client;
-import com.equiplano.application.services.ClientService;
+import com.equiplano.application.DTO.CustomerRequestDTO;
+import com.equiplano.application.DTO.CustomerResponseDTO;
+import com.equiplano.application.converter.CustomerRequestDTOConverter;
+import com.equiplano.application.converter.CustomerResponseDTOConverter;
+import com.equiplano.application.request.CustomerRequest;
+import com.equiplano.application.response.CustomerResponse;
+import com.equiplano.application.services.CustomerService;
 
 @RestController
-@RequestMapping("/api/v1")
-public class ClientController {
+@RequestMapping("/api/v1/customer")
+public class CustomerController {
 
-	private final ClientService clientService;
-	
+	private final CustomerService customerService;
+	private final CustomerRequestDTOConverter customerRequestDTOConverter;
+	private final CustomerResponseDTOConverter customerResponseDTOConverter;
+
 	@Autowired
-	public ClientController(ClientService clientService ) {
-		this.clientService = clientService;
+	public CustomerController(CustomerService customerService,
+								CustomerRequestDTOConverter customerRequestDTOConverter,
+								CustomerResponseDTOConverter customerResponseDTOConverter
+								) {
+		this.customerService = customerService;
+		this.customerRequestDTOConverter = customerRequestDTOConverter;
+		this.customerResponseDTOConverter = customerResponseDTOConverter;
 	}
-	
+
 	@PostMapping(path = "/create")
-	public ResponseEntity<? extends Client> createClient(@RequestBody Client clientRequest){
+	public ResponseEntity<? extends CustomerResponse> createClient(@RequestBody CustomerRequest customerRequest){
 		
-		Client client = this.clientService.saveClient(clientRequest);
-		return new ResponseEntity<>(client, HttpStatus.CREATED);
+		CustomerRequestDTO customerRequestDTO = customerRequestDTOConverter.apply(customerRequest);
+		CustomerResponseDTO customerResponseDTO = this.customerService.createCustomer(customerRequestDTO);
+		CustomerResponse response = this.customerResponseDTOConverter.apply(customerResponseDTO);
+		
+		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
 }

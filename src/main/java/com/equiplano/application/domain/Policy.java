@@ -22,7 +22,7 @@ public class Policy extends DomainModel<Policy> {
 	
 	@ManyToOne
 	@JoinColumn(name = "cliente_id")
-	private Client client;
+	private Customer customer;
 	
 	@Column(name = "numero_apolice", unique = true, nullable = false)
 	private String policyNumber;
@@ -72,12 +72,12 @@ public class Policy extends DomainModel<Policy> {
 	}
 	
 
-	public Client getClient() {
-		return client;
+	public Customer getClient() {
+		return customer;
 	}
 
-	public void setClient(Client client) {
-		this.client = client;
+	public void setClient(Customer customer) {
+		this.customer = customer;
 	}
 
 	@PrePersist
@@ -86,7 +86,7 @@ public class Policy extends DomainModel<Policy> {
 	}
 
 	public boolean isCurrent() {
-		return this.getEndTerm().isBefore(LocalDate.now()) ? true : false;
+		return this.getEndTerm().isAfter(LocalDate.now()) ? true : false;
 	}
 	
 	public Long untilDueDate() {
@@ -98,7 +98,7 @@ public class Policy extends DomainModel<Policy> {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + Objects.hash(client, endTerm, policyNumber, policyValue, startTerm, vehiclePlate);
+		result = prime * result + Objects.hash(customer, endTerm, policyNumber, policyValue, startTerm, vehiclePlate);
 		return result;
 	}
 
@@ -111,7 +111,7 @@ public class Policy extends DomainModel<Policy> {
 		if (getClass() != obj.getClass())
 			return false;
 		Policy other = (Policy) obj;
-		return Objects.equals(client, other.client) && Objects.equals(endTerm, other.endTerm)
+		return Objects.equals(customer, other.customer) && Objects.equals(endTerm, other.endTerm)
 				&& Objects.equals(policyNumber, other.policyNumber) && Objects.equals(policyValue, other.policyValue)
 				&& Objects.equals(startTerm, other.startTerm) && Objects.equals(vehiclePlate, other.vehiclePlate);
 	}
@@ -119,8 +119,8 @@ public class Policy extends DomainModel<Policy> {
 	@Override
 	public String toString() {
 		return String.format(
-				"Policy [client=%s, policyNumber=%s, startTerm=%s, endTerm=%s, vehiclePlate=%s, policyValue=%s]",
-				client, policyNumber, startTerm, endTerm, vehiclePlate, policyValue);
+				"Policy [customer=%s, policyNumber=%s, startTerm=%s, endTerm=%s, vehiclePlate=%s, policyValue=%s]",
+				customer, policyNumber, startTerm, endTerm, vehiclePlate, policyValue);
 	}
 	
 	

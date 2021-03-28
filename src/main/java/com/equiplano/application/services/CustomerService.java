@@ -1,23 +1,11 @@
 package com.equiplano.application.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.equiplano.application.DTO.CustomerRequestDTO;
+import com.equiplano.application.DTO.CustomerResponseDTO;
 
-import com.equiplano.application.domain.Client;
-import com.equiplano.application.repository.ClientRepository;
+public interface CustomerService {
 
-@Service
-public class ClientService {
-
-	private final ClientRepository clientRepository;
-
-	@Autowired
-	public ClientService(ClientRepository clientRepository) {
-		this.clientRepository = clientRepository;
-	}
-
-	public Client saveClient(Client clientRequest) {
-		Client client = this.clientRepository.save(clientRequest);
-		return client;
-	}
+	CustomerResponseDTO createCustomer(CustomerRequestDTO customerRequestDTO);
+	CustomerResponseDTO findCustomerById(Long id);
+	
 }

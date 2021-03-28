@@ -1,5 +1,5 @@
 CREATE TABLE `apolices` (
-  `id` BIGINT(20) NOT NULL,
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `cliente_id` BIGINT(20) NOT NULL,
   `numero_apolice` VARCHAR(100) NOT NULL,
   `inicio_vigencia` VARCHAR(45) NOT NULL,
