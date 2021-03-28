@@ -13,6 +13,7 @@ public class PolicyResponseDTO {
 	private String vehiclePlate;
 	private Double policyValue;
 	private boolean isCurrent;
+	private Long untilDueDate;
 
 	public Customer getCustomer() {
 		return customer;
@@ -68,6 +69,14 @@ public class PolicyResponseDTO {
 
 	public void setCurrent(boolean isCurrent) {
 		this.isCurrent = isCurrent;
+	}
+
+	public Long getUntilDueDate() {
+		return untilDueDate;
+	}
+
+	public void setUntilDueDate(Long untilDueDate) {
+		this.untilDueDate = untilDueDate;
 	}
 	
 	

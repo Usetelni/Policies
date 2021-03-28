@@ -1,11 +1,16 @@
 package com.equiplano.application.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.equiplano.application.controller.request.CustomerRequest;
@@ -25,22 +30,29 @@ public class CustomerController {
 	private final CustomerResponseDTOConverter customerResponseDTOConverter;
 
 	@Autowired
-	public CustomerController(CustomerService customerService,
-								CustomerRequestDTOConverter customerRequestDTOConverter,
-								CustomerResponseDTOConverter customerResponseDTOConverter
-								) {
+	public CustomerController(CustomerService customerService, CustomerRequestDTOConverter customerRequestDTOConverter,
+			CustomerResponseDTOConverter customerResponseDTOConverter) {
 		this.customerService = customerService;
 		this.customerRequestDTOConverter = customerRequestDTOConverter;
 		this.customerResponseDTOConverter = customerResponseDTOConverter;
 	}
 
 	@PostMapping(path = "/create")
-	public ResponseEntity<? extends CustomerResponse> createClient(@RequestBody CustomerRequest customerRequest){
-		
+	public ResponseEntity<? extends CustomerResponse> createCustomer(@Valid @RequestBody CustomerRequest customerRequest) {
+
 		CustomerRequestDTO customerRequestDTO = customerRequestDTOConverter.apply(customerRequest);
 		CustomerResponseDTO customerResponseDTO = this.customerService.createCustomer(customerRequestDTO);
 		CustomerResponse response = this.customerResponseDTOConverter.apply(customerResponseDTO);
-		
+
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
+
+	@GetMapping
+	public ResponseEntity<? extends CustomerResponse> getCustomer(@RequestParam("id") String id) {
+		CustomerResponseDTO customerResponseDTO = this.customerService.findCustomerById(Long.parseLong(id));
+		CustomerResponse response = this.customerResponseDTOConverter.apply(customerResponseDTO);
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+	
+	
 }

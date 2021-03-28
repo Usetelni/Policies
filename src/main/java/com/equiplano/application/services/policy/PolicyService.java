@@ -6,6 +6,7 @@ import com.equiplano.application.dto.policy.PolicyRequestDTO;
 public interface PolicyService {
 
 	PolicyResponseDTO createPolicy(String customerId, PolicyRequestDTO policy);
-	PolicyRequestDTO findPolicyById(Long id);
-	PolicyRequestDTO findPolicyByNumber(String policyNumber);
+	PolicyResponseDTO findPolicyById(Long id);
+	PolicyResponseDTO findPolicyByNumber(String policyNumber);
+	
 }

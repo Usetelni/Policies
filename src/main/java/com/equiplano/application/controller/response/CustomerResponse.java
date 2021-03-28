@@ -4,7 +4,10 @@ import java.util.List;
 
 import com.equiplano.application.domain.Policy;
 import com.equiplano.application.domain.base.DateModel;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+@JsonInclude(content = Include.NON_NULL)
 public class CustomerResponse {
 
 	private Long customerId;

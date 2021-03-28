@@ -29,7 +29,7 @@ public class Customer extends DomainModel<Customer> {
 	@Column(name = "uf", nullable = false)
 	private String federativeUnit;
 	
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
 	@JoinColumn(name = "cliente_id", referencedColumnName = "id")
 	@JsonBackReference
 	private List<Policy> policies;

@@ -18,9 +18,8 @@ public class CustomerResponseDTOConverter implements Function<CustomerResponseDT
 		response.withFullName(customerResponseDTO.getFullName());
 		response.withCpf(customerResponseDTO.getCpf());
 		response.withCity(customerResponseDTO.getCity());
-		response.withFederalUnity(customerResponseDTO.getFederalUnity());
-		response.withDateModel(customerResponseDTO.getDateModel());
 		response.withPolicies(customerResponseDTO.getPolicies());
+		response.withFederalUnity(customerResponseDTO.getFederalUnity());
 		
 		return response;
 	}

@@ -22,6 +22,7 @@ public class PolicyToPolicyResponseDTO implements Function<Policy, PolicyRespons
 		polucyResponseDTO.setVehiclePlate(policy.getVehiclePlate());
 		polucyResponseDTO.setPolicyValue(policy.getPolicyValue());
 		polucyResponseDTO.setCurrent(policy.isCurrent());
+		polucyResponseDTO.setUntilDueDate(policy.getUtilDueDate());
 		
 		return polucyResponseDTO;
 	}

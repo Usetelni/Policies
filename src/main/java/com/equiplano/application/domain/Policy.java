@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.equiplano.application.domain.base.DomainModel;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -22,8 +23,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 public class Policy extends DomainModel<Policy> {
 
 	private static final long serialVersionUID = 8303858629788568223L;
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "cliente_id")
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "cliente_id", updatable = false)
 	@JsonBackReference
 	private Customer customer;
 	@Column(name = "numero_apolice", unique = true, nullable = false)
@@ -36,6 +37,16 @@ public class Policy extends DomainModel<Policy> {
 	private String vehiclePlate;
 	@Column(name = "valor_apolice", nullable = false)
 	private Double policyValue;
+	@Transient
+	private Long utilDueDate;
+
+	public Long getUtilDueDate() {
+		return utilDueDate;
+	}
+
+	public void setUtilDueDate(Long utilDueDate) {
+		this.utilDueDate = utilDueDate;
+	}
 
 	public String getPolicyNumber() {
 		return policyNumber;
@@ -92,9 +103,11 @@ public class Policy extends DomainModel<Policy> {
 		return this.getEndTerm().isAfter(LocalDate.now()) ? true : false;
 	}
 	
+	
 	public Long untilDueDate() {
 	
-		return ChronoUnit.DAYS.between(this.getEndTerm(), LocalDate.now());
+		this.utilDueDate =  ChronoUnit.DAYS.between(this.getEndTerm(), LocalDate.now());
+		return this.utilDueDate;
 	}
 
 	@Override

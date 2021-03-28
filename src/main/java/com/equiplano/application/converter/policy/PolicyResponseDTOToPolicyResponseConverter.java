@@ -1,5 +1,7 @@
 package com.equiplano.application.converter.policy;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.function.Function;
 
 import org.springframework.stereotype.Component;
@@ -22,6 +24,7 @@ public class PolicyResponseDTOToPolicyResponseConverter implements Function<Poli
 		policyResponse.setVehiclePlate(policyResponseDTO.getVehiclePlate());
 		policyResponse.setPolicyValue(policyResponseDTO.getPolicyValue());
 		policyResponse.setCurrent(policyResponseDTO.isCurrent());
+		policyResponse.setUtilDueDate((ChronoUnit.DAYS.between(LocalDate.now(),policyResponseDTO.getEndTerm())) > 0 ? ChronoUnit.DAYS.between(LocalDate.now(),policyResponseDTO.getEndTerm()):0);
 		
 		return policyResponse;
 	}

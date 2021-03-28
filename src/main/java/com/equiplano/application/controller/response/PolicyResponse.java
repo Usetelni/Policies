@@ -13,6 +13,7 @@ public class PolicyResponse {
 	private String vehiclePlate;
 	private Double policyValue;
 	private boolean isCurrent;
+	private Long utilDueDate;
 
 	public Customer getCustomer() {
 		return customer;
@@ -70,4 +71,13 @@ public class PolicyResponse {
 		this.isCurrent = isCurrent;
 	}
 
+	public Long getUtilDueDate() {
+		return utilDueDate;
+	}
+
+	public void setUtilDueDate(Long utilDueDate) {
+		this.utilDueDate = utilDueDate;
+	}
+
+	
 }

@@ -1,5 +1,7 @@
 package com.equiplano.application.services.policy;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,9 +49,6 @@ public class PolicyServiceImpl implements PolicyService{
 		policyDTO.withCustomer(customer);
 		
 		Policy policy = this.policyRequestDTOToPolicyConverter.apply(policyDTO);
-		
-		System.out.println(policy);
-		
 		Policy policyResponse = this.policyRepository.save(policy);
 		
 		PolicyResponseDTO policyReponseDto = this.policyToPolicyResponseDTO.apply(policyResponse);
@@ -58,14 +57,17 @@ public class PolicyServiceImpl implements PolicyService{
 	}
 
 	@Override
-	public PolicyRequestDTO findPolicyById(Long id) {
+	public PolicyResponseDTO findPolicyById(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public PolicyRequestDTO findPolicyByNumber(String policyNumber) {
-		// TODO Auto-generated method stub
-		return null;
+	public PolicyResponseDTO findPolicyByNumber(String policyNumber) {
+		Policy policy = this.policyRepository.findPolicyByPolicyNumber(policyNumber);
+		PolicyResponseDTO policyReesponseDto = this.policyToPolicyResponseDTO.apply(policy);
+		return policyReesponseDto;
 	}
+
+	
 }

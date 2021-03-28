@@ -20,7 +20,7 @@ public class CustomerToCustomerResponseDTOConverter implements Function<Customer
 		customerResponseDTO.withCity(customer.getCity());
 		customerResponseDTO.withFederalUnity(customer.getFederativeUnit());
 		customerResponseDTO.withDateModel(customer.getDateModel());
-//		customerResponseDTO.withPolicies(customer.getPolicies());
+		customerResponseDTO.withPolicies(customer.getPolicies());
 		
 		
 		
