@@ -5,23 +5,26 @@ import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 import com.equiplano.application.domain.base.DomainModel;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "apolices")
 public class Policy extends DomainModel<Policy> {
 
 	private static final long serialVersionUID = 8303858629788568223L;
-	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "cliente_id")
+	@JsonBackReference
 	private Customer customer;
 	@Column(name = "numero_apolice", unique = true, nullable = false)
 	private String policyNumber;
@@ -78,6 +81,7 @@ public class Policy extends DomainModel<Policy> {
 	public void setClient(Customer customer) {
 		this.customer = customer;
 	}
+
 
 	@PrePersist
 	public void createPolicyNumber() {

@@ -17,17 +17,17 @@ public class PolicyRequestDTOToPolicyConverter implements Function<PolicyRequest
 		
 		Policy policy = new Policy();
 		
-		Customer customer = new Customer();
+//		Customer customer = new Customer();
+//		
+//		customer.setId(policyRequestDTO.getCustomer().getId());
+//		customer.setFullName(policyRequestDTO.getCustomer().getFullName());
+//		customer.setCpf(policyRequestDTO.getCustomer().getCpf());
+//		customer.setCity(policyRequestDTO.getCustomer().getCity());
+//		customer.setFederativeUnit(policyRequestDTO.getCustomer().getFederativeUnit());
+//		customer.setDateModel(policyRequestDTO.getCustomer().getDateModel());
+//		customer.setPolicies((policyRequestDTO.getCustomer().getPolicies() != null) ? policyRequestDTO.getCustomer().getPolicies() : new ArrayList<>() );
 		
-		customer.setId(policyRequestDTO.getCustomer().getId());
-		customer.setFullName(policyRequestDTO.getCustomer().getFullName());
-		customer.setCpf(policyRequestDTO.getCustomer().getCpf());
-		customer.setCity(policyRequestDTO.getCustomer().getCity());
-		customer.setFederativeUnit(policyRequestDTO.getCustomer().getFederativeUnit());
-		customer.setDateModel(policyRequestDTO.getCustomer().getDateModel());
-		customer.setPolicies((policyRequestDTO.getCustomer().getPolicies() != null) ? policyRequestDTO.getCustomer().getPolicies() : new ArrayList<>() );
-		
-		policy.setClient(customer);
+		policy.setClient(policyRequestDTO.getCustomer());
 		policy.setStartTerm(policyRequestDTO.getStartTerm());
 		policy.setEndTerm(policyRequestDTO.getEndTerm());
 		policy.setVehiclePlate(policyRequestDTO.getVehiclePlate());

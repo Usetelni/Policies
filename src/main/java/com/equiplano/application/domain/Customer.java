@@ -7,17 +7,15 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.equiplano.application.domain.base.DomainModel;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "clientes")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Customer extends DomainModel<Customer> {
 
 	private static final long serialVersionUID = -5203930890027185670L;
@@ -30,8 +28,10 @@ public class Customer extends DomainModel<Customer> {
 	private String city;
 	@Column(name = "uf", nullable = false)
 	private String federativeUnit;
+	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "cliente_id", referencedColumnName = "id")
+	@JsonBackReference
 	private List<Policy> policies;
 
 	public String getFullName() {

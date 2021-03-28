@@ -9,8 +9,8 @@ import com.equiplano.application.converter.policy.PolicyRequestDTOToPolicyConver
 import com.equiplano.application.converter.policy.PolicyToPolicyResponseDTO;
 import com.equiplano.application.domain.Customer;
 import com.equiplano.application.domain.Policy;
-import com.equiplano.application.dto.customer.CustomerResponseDTO;
 import com.equiplano.application.dto.policy.PolicyRequestDTO;
+import com.equiplano.application.repository.CustomerRepository;
 import com.equiplano.application.repository.PolicyRepository;
 import com.equiplano.application.services.customer.CustomerService;
 
@@ -22,25 +22,27 @@ public class PolicyServiceImpl implements PolicyService{
 	private final PolicyRequestDTOToPolicyConverter policyRequestDTOToPolicyConverter;
 	private final PolicyToPolicyResponseDTO policyToPolicyResponseDTO;
 	private final CustomerResponseDTOToCustomerConverter customerResponseDTOToCustomerConverter;
+	private final CustomerRepository customerRepository;
 	
 	@Autowired
 	public PolicyServiceImpl(PolicyRepository policyRepository,
 							 CustomerService customerService,
 							 PolicyRequestDTOToPolicyConverter policyRequestDTOToPolicyConverter,
 							 PolicyToPolicyResponseDTO policyToPolicyResponseDTO,
-							 CustomerResponseDTOToCustomerConverter customerResponseDTOToCustomerConverter) {
+							 CustomerResponseDTOToCustomerConverter customerResponseDTOToCustomerConverter,
+							 CustomerRepository customerRepository) {
 		this.policyRepository = policyRepository;
 		this.customerService = customerService;
 		this.policyRequestDTOToPolicyConverter = policyRequestDTOToPolicyConverter;
 		this.policyToPolicyResponseDTO = policyToPolicyResponseDTO;
 		this.customerResponseDTOToCustomerConverter = customerResponseDTOToCustomerConverter;
+		this.customerRepository = customerRepository;
 	}
 
 	@Override
 	public PolicyResponseDTO createPolicy(String customerId,PolicyRequestDTO policyDTO) {
 		
-		CustomerResponseDTO customerResponseDTO = this.customerService.findCustomerById(Long.parseLong(customerId));
-		Customer customer = this.customerResponseDTOToCustomerConverter.apply(customerResponseDTO);
+		Customer customer = this.customerRepository.findById(Long.parseLong(customerId)).get();
 		
 		policyDTO.withCustomer(customer);
 		
