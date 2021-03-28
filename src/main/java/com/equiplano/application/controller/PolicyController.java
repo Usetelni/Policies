@@ -9,35 +9,44 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.equiplano.application.domain.Customer;
-import com.equiplano.application.domain.Policy;
-import com.equiplano.application.request.PolicyRequest;
-import com.equiplano.application.services.CustomerServiceImpl;
-import com.equiplano.application.services.PolicyServiceImpl;
+import com.equiplano.application.controller.request.PolicyRequest;
+import com.equiplano.application.controller.response.PolicyResponse;
+import com.equiplano.application.controller.response.PolicyResponseDTO;
+import com.equiplano.application.converter.policy.PolicyRequestToPolicyRequestDTOConverter;
+import com.equiplano.application.converter.policy.PolicyResponseDTOToPolicyResponseConverter;
+import com.equiplano.application.dto.policy.PolicyRequestDTO;
+import com.equiplano.application.services.policy.PolicyService;
 
 @RestController
 @RequestMapping("/api/v1/policy")
 public class PolicyController {
 
-	private final PolicyServiceImpl policyServiceImpl;
-	private final CustomerServiceImpl customerServiceImpl;
+	private final PolicyService policyService;
+	private final PolicyRequestToPolicyRequestDTOConverter policyRequestToPolicyRequestDTOConverter;
+	private final PolicyResponseDTOToPolicyResponseConverter policyResponseDTOToPolicyResponseConverter;
 	
 	@Autowired
-	public PolicyController(PolicyServiceImpl policyServiceImpl, CustomerServiceImpl customerServiceImpl ) {
-		this.policyServiceImpl = policyServiceImpl;
-		this.customerServiceImpl = customerServiceImpl;
+	public PolicyController(PolicyService policyService,
+							PolicyRequestToPolicyRequestDTOConverter policyRequestToPolicyRequestDTOConverter,
+							PolicyResponseDTOToPolicyResponseConverter policyResponseDTOToPolicyResponseConverter) {
+		this.policyService = policyService;
+		this.policyRequestToPolicyRequestDTOConverter = policyRequestToPolicyRequestDTOConverter;
+		this.policyResponseDTOToPolicyResponseConverter = policyResponseDTOToPolicyResponseConverter;
 	}
 	
 	@PostMapping(path = "/create")
-	public ResponseEntity<? extends Policy> create(
+	public ResponseEntity<? extends PolicyResponse> create(
 			@RequestHeader(value = "id", required = true) String customerId, 
 			@RequestBody PolicyRequest policyRequest){
 		
+		PolicyRequestDTO policyRequestDTO = this.policyRequestToPolicyRequestDTOConverter.apply(policyRequest);
 		
-//		Policy policy = this.policyServiceImpl.createPolicy(customerId,policyRequest);
+		PolicyResponseDTO policyResponseDTO = this.policyService.createPolicy(customerId,policyRequestDTO);
+		PolicyResponse policyResponse = this.policyResponseDTOToPolicyResponseConverter.apply(policyResponseDTO);
 		
-//		return new ResponseEntity<>(policy, HttpStatus.CREATED);
-		return null;
+		
+		return new ResponseEntity<>(policyResponse, HttpStatus.CREATED);
+		
 		
 	}
 }

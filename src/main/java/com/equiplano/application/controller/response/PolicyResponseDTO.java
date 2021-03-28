@@ -1,12 +1,10 @@
-package com.equiplano.application.request;
+package com.equiplano.application.controller.response;
 
 import java.time.LocalDate;
 
-import javax.persistence.Column;
-
 import com.equiplano.application.domain.Customer;
 
-public class PolicyRequest {
+public class PolicyResponseDTO {
 
 	private Customer customer;
 	private String policyNumber;
@@ -14,6 +12,7 @@ public class PolicyRequest {
 	private LocalDate endTerm;
 	private String vehiclePlate;
 	private Double policyValue;
+	private boolean isCurrent;
 
 	public Customer getCustomer() {
 		return customer;
@@ -62,5 +61,15 @@ public class PolicyRequest {
 	public void setPolicyValue(Double policyValue) {
 		this.policyValue = policyValue;
 	}
+
+	public boolean isCurrent() {
+		return isCurrent;
+	}
+
+	public void setCurrent(boolean isCurrent) {
+		this.isCurrent = isCurrent;
+	}
+	
+	
 
 }

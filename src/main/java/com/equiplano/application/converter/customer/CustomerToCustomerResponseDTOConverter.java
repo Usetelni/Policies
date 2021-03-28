@@ -1,11 +1,11 @@
-package com.equiplano.application.converter;
+package com.equiplano.application.converter.customer;
 
 import java.util.function.Function;
 
 import org.springframework.stereotype.Component;
 
-import com.equiplano.application.DTO.CustomerResponseDTO;
 import com.equiplano.application.domain.Customer;
+import com.equiplano.application.dto.customer.CustomerResponseDTO;
 
 @Component
 public class CustomerToCustomerResponseDTOConverter implements Function<Customer, CustomerResponseDTO>{
@@ -20,7 +20,7 @@ public class CustomerToCustomerResponseDTOConverter implements Function<Customer
 		customerResponseDTO.withCity(customer.getCity());
 		customerResponseDTO.withFederalUnity(customer.getFederativeUnit());
 		customerResponseDTO.withDateModel(customer.getDateModel());
-		customerResponseDTO.withPolicies(customer.getPolicies());
+//		customerResponseDTO.withPolicies(customer.getPolicies());
 		
 		
 		

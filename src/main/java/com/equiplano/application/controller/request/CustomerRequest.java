@@ -1,4 +1,4 @@
-package com.equiplano.application.request;
+package com.equiplano.application.controller.request;
 
 public class CustomerRequest {
 

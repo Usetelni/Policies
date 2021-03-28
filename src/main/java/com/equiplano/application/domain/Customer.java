@@ -3,8 +3,12 @@ package com.equiplano.application.domain;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -13,6 +17,7 @@ import com.equiplano.application.domain.base.DomainModel;
 
 @Entity
 @Table(name = "clientes")
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Customer extends DomainModel<Customer> {
 
 	private static final long serialVersionUID = -5203930890027185670L;
@@ -25,10 +30,9 @@ public class Customer extends DomainModel<Customer> {
 	private String city;
 	@Column(name = "uf", nullable = false)
 	private String federativeUnit;
-	@OneToMany
-	@JoinColumn(referencedColumnName = "id")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "cliente_id", referencedColumnName = "id")
 	private List<Policy> policies;
-
 
 	public String getFullName() {
 		return fullName;
@@ -70,6 +74,7 @@ public class Customer extends DomainModel<Customer> {
 	public void setPolicies(List<Policy> policies) {
 		this.policies = policies;
 	}
+	
 
 	@Override
 	public int hashCode() {
@@ -94,8 +99,10 @@ public class Customer extends DomainModel<Customer> {
 
 	@Override
 	public String toString() {
-		return String.format("Customer [fullName=%s, cpf=%s, city=%s, federativeUnit=%s]", fullName, cpf, city,
-				federativeUnit);
+		return String.format("Customer [fullName=%s, cpf=%s, city=%s, federativeUnit=%s]", fullName, cpf,
+				city, federativeUnit);
 	}
+
+	
 	
 }

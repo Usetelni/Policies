@@ -23,7 +23,6 @@ public class Policy extends DomainModel<Policy> {
 	@ManyToOne
 	@JoinColumn(name = "cliente_id")
 	private Customer customer;
-	
 	@Column(name = "numero_apolice", unique = true, nullable = false)
 	private String policyNumber;
 	@Column(name = "inicio_vigencia", nullable = false)
@@ -82,7 +81,7 @@ public class Policy extends DomainModel<Policy> {
 
 	@PrePersist
 	public void createPolicyNumber() {
-		this.policyNumber = "PLC - " + UUID.randomUUID().toString();
+		this.policyNumber = "PLC-" + UUID.randomUUID().toString();
 	}
 
 	public boolean isCurrent() {

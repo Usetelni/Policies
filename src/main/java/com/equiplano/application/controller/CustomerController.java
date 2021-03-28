@@ -8,13 +8,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.equiplano.application.DTO.CustomerRequestDTO;
-import com.equiplano.application.DTO.CustomerResponseDTO;
-import com.equiplano.application.converter.CustomerRequestDTOConverter;
-import com.equiplano.application.converter.CustomerResponseDTOConverter;
-import com.equiplano.application.request.CustomerRequest;
-import com.equiplano.application.response.CustomerResponse;
-import com.equiplano.application.services.CustomerService;
+import com.equiplano.application.controller.request.CustomerRequest;
+import com.equiplano.application.controller.response.CustomerResponse;
+import com.equiplano.application.converter.customer.CustomerRequestDTOConverter;
+import com.equiplano.application.converter.customer.CustomerResponseDTOConverter;
+import com.equiplano.application.dto.customer.CustomerRequestDTO;
+import com.equiplano.application.dto.customer.CustomerResponseDTO;
+import com.equiplano.application.services.customer.CustomerService;
 
 @RestController
 @RequestMapping("/api/v1/customer")

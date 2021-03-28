@@ -1,11 +1,11 @@
-package com.equiplano.application.converter;
+package com.equiplano.application.converter.customer;
 
 import java.util.function.Function;
 
 import org.springframework.stereotype.Component;
 
-import com.equiplano.application.DTO.CustomerRequestDTO;
 import com.equiplano.application.domain.Customer;
+import com.equiplano.application.dto.customer.CustomerRequestDTO;
 
 @Component
 public class CustomerRequestDTOToCustomerConverter implements Function<CustomerRequestDTO, Customer>{

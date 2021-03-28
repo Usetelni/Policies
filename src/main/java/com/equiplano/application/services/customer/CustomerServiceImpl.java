@@ -1,13 +1,13 @@
-package com.equiplano.application.services;
+package com.equiplano.application.services.customer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.equiplano.application.DTO.CustomerRequestDTO;
-import com.equiplano.application.DTO.CustomerResponseDTO;
-import com.equiplano.application.converter.CustomerRequestDTOToCustomerConverter;
-import com.equiplano.application.converter.CustomerToCustomerResponseDTOConverter;
+import com.equiplano.application.converter.customer.CustomerRequestDTOToCustomerConverter;
+import com.equiplano.application.converter.customer.CustomerToCustomerResponseDTOConverter;
 import com.equiplano.application.domain.Customer;
+import com.equiplano.application.dto.customer.CustomerRequestDTO;
+import com.equiplano.application.dto.customer.CustomerResponseDTO;
 import com.equiplano.application.repository.CustomerRepository;
 
 @Service

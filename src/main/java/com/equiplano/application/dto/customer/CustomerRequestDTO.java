@@ -1,4 +1,4 @@
-package com.equiplano.application.DTO;
+package com.equiplano.application.dto.customer;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;

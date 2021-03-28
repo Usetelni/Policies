@@ -1,4 +1,4 @@
-package com.equiplano.application.response;
+package com.equiplano.application.controller.response;
 
 import java.util.List;
 
