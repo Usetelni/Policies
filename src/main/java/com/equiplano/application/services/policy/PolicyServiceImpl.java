@@ -1,7 +1,5 @@
 package com.equiplano.application.services.policy;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +10,7 @@ import com.equiplano.application.converter.policy.PolicyToPolicyResponseDTO;
 import com.equiplano.application.domain.Customer;
 import com.equiplano.application.domain.Policy;
 import com.equiplano.application.dto.policy.PolicyRequestDTO;
+import com.equiplano.application.exception.PolicyException;
 import com.equiplano.application.repository.CustomerRepository;
 import com.equiplano.application.repository.PolicyRepository;
 import com.equiplano.application.services.customer.CustomerService;
@@ -43,16 +42,19 @@ public class PolicyServiceImpl implements PolicyService{
 
 	@Override
 	public PolicyResponseDTO createPolicy(String customerId,PolicyRequestDTO policyDTO) {
-		
+		PolicyResponseDTO policyReponseDto  = null;
 		Customer customer = this.customerRepository.findById(Long.parseLong(customerId)).get();
-		
+		try {
 		policyDTO.withCustomer(customer);
 		
 		Policy policy = this.policyRequestDTOToPolicyConverter.apply(policyDTO);
 		Policy policyResponse = this.policyRepository.save(policy);
 		
-		PolicyResponseDTO policyReponseDto = this.policyToPolicyResponseDTO.apply(policyResponse);
-		
+		 policyReponseDto = this.policyToPolicyResponseDTO.apply(policyResponse);
+		 
+		}catch(Exception e) {
+			throw new PolicyException(e.getMessage(), e.getCause());
+		}
 		return policyReponseDto;
 	}
 

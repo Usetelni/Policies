@@ -10,6 +10,9 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+
+import org.hibernate.validator.constraints.br.CPF;
 
 import com.equiplano.application.domain.base.DomainModel;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -21,12 +24,17 @@ public class Customer extends DomainModel<Customer> {
 	private static final long serialVersionUID = -5203930890027185670L;
 	
 	@Column(name = "nome_completo", nullable = false)
+	@NotBlank(message = "O Nome deve ser preenchido.")
 	private String fullName;
 	@Column(name = "cpf", nullable = false, unique = true)
+	@CPF(message = "Cpf informado invalido")
+	@NotBlank(message = "Cpf deve ser infomado.")
 	private String cpf;
 	@Column(name = "cidade", nullable = false)
+	@NotBlank(message = "Cidade deve ser infomado")
 	private String city;
 	@Column(name = "uf", nullable = false)
+	@NotBlank(message = "O UF deve ser infomado.")
 	private String federativeUnit;
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)

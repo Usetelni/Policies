@@ -1,5 +1,7 @@
 package com.equiplano.application.services.customer;
 
+import java.util.Objects;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -8,6 +10,7 @@ import com.equiplano.application.converter.customer.CustomerToCustomerResponseDT
 import com.equiplano.application.domain.Customer;
 import com.equiplano.application.dto.customer.CustomerRequestDTO;
 import com.equiplano.application.dto.customer.CustomerResponseDTO;
+import com.equiplano.application.exception.CustomerException;
 import com.equiplano.application.repository.CustomerRepository;
 
 @Service
@@ -28,16 +31,25 @@ public class CustomerServiceImpl implements CustomerService{
 	
 	@Override
 	public CustomerResponseDTO findCustomerById(Long id) {
+		CustomerResponseDTO customerResponseDTO = null;
 		Customer customer = this.customerRepository.findById(id).get();
-		CustomerResponseDTO customerResponseDTO = this.customerToCustomerResponseDTOConverter.apply(customer);
+		
+		if(Objects.nonNull(customer)) {
+			customerResponseDTO = this.customerToCustomerResponseDTOConverter.apply(customer);
+		}
 		return customerResponseDTO;
 	}
 
 	@Override
 	public CustomerResponseDTO createCustomer(CustomerRequestDTO customerRequestDTO) {
-		Customer customer = this.customerRequestDTOToCustomerConverter.apply(customerRequestDTO);
-		Customer customerResponse = this.customerRepository.save(customer);
-		CustomerResponseDTO customerResponseDTO = this.customerToCustomerResponseDTOConverter.apply(customerResponse);
+		CustomerResponseDTO customerResponseDTO = null;
+		try {
+			Customer customer = this.customerRequestDTOToCustomerConverter.apply(customerRequestDTO);
+			Customer customerResponse = this.customerRepository.save(customer);
+			customerResponseDTO = this.customerToCustomerResponseDTOConverter.apply(customerResponse);
+		}catch(Exception e) {
+			throw new CustomerException(e.getMessage(), e.getCause());
+		}
 		return customerResponseDTO;
 	}
 

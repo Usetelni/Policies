@@ -1,11 +1,8 @@
 package com.equiplano.application.controller;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,7 +35,7 @@ public class CustomerController {
 	}
 
 	@PostMapping(path = "/create")
-	public ResponseEntity<? extends CustomerResponse> createCustomer(@Valid @RequestBody CustomerRequest customerRequest) {
+	public ResponseEntity<? extends CustomerResponse> createCustomer(@RequestBody CustomerRequest customerRequest) {
 
 		CustomerRequestDTO customerRequestDTO = customerRequestDTOConverter.apply(customerRequest);
 		CustomerResponseDTO customerResponseDTO = this.customerService.createCustomer(customerRequestDTO);

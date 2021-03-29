@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import com.equiplano.application.domain.base.DomainModel;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -23,19 +25,25 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 public class Policy extends DomainModel<Policy> {
 
 	private static final long serialVersionUID = 8303858629788568223L;
+	
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "cliente_id", updatable = false)
 	@JsonBackReference
 	private Customer customer;
 	@Column(name = "numero_apolice", unique = true, nullable = false)
+	@NotBlank(message = "O Numero da Apolice não foi gerado.")
 	private String policyNumber;
 	@Column(name = "inicio_vigencia", nullable = false)
+	@NotNull(message = "A data de inicio da vigencia deve ser preenchida.")
 	private LocalDate startTerm;
 	@Column(name = "fim_vigencia", nullable = false)
+	@NotNull(message = "A data de fim de vigencia deve ser preenchida.")
 	private LocalDate endTerm;
 	@Column(name = "placa_veiculo", nullable = false)
+	@NotBlank(message = "A placa do veículo deve ser informado.")
 	private String vehiclePlate;
 	@Column(name = "valor_apolice", nullable = false)
+	@NotNull(message = "O valor da apólice deve ser informado.")
 	private Double policyValue;
 	@Transient
 	private Long utilDueDate;
