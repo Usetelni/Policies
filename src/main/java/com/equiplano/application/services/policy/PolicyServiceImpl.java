@@ -56,8 +56,9 @@ public class PolicyServiceImpl implements PolicyService{
 
 	@Override
 	public PolicyResponseDTO findPolicyById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		Policy policy = this.policyRepository.findById(id).get();
+		PolicyResponseDTO policyReesponseDto = this.policyToPolicyResponseDTO.apply(policy);
+		return policyReesponseDto;
 	}
 
 	@Override

@@ -59,4 +59,13 @@ public class PolicyController {
 		
 		return new ResponseEntity<>(policyResponse, HttpStatus.OK);
 	}
+	
+	@GetMapping(path = "/number/{id}")
+	public ResponseEntity<? extends PolicyResponse> getPolicyById(@PathVariable("id") String id){
+
+		PolicyResponseDTO policyResponseDTO = this.policyService.findPolicyByNumber(id);
+		PolicyResponse policyResponse = this.policyResponseDTOToPolicyResponseConverter.apply(policyResponseDTO);
+		
+		return new ResponseEntity<>(policyResponse, HttpStatus.OK);
+	}
 }
