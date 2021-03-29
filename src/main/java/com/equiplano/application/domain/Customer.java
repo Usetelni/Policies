@@ -10,26 +10,36 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+
+import org.hibernate.validator.constraints.br.CPF;
 
 import com.equiplano.application.domain.base.DomainModel;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
-@Table(name = "cliente")
-public class Client extends DomainModel<Client> {
+@Table(name = "clientes")
+public class Customer extends DomainModel<Customer> {
 
 	private static final long serialVersionUID = -5203930890027185670L;
 	
 	@Column(name = "nome_completo", nullable = false)
+	@NotBlank(message = "O Nome deve ser preenchido.")
 	private String fullName;
 	@Column(name = "cpf", nullable = false, unique = true)
+	@CPF(message = "Cpf informado invalido")
+	@NotBlank(message = "Cpf deve ser infomado.")
 	private String cpf;
 	@Column(name = "cidade", nullable = false)
+	@NotBlank(message = "Cidade deve ser infomado")
 	private String city;
 	@Column(name = "uf", nullable = false)
+	@NotBlank(message = "O UF deve ser infomado.")
 	private String federativeUnit;
 	
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "policies", referencedColumnName = "id")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+	@JoinColumn(name = "cliente_id", referencedColumnName = "id")
+	@JsonBackReference
 	private List<Policy> policies;
 
 	public String getFullName() {
@@ -64,6 +74,7 @@ public class Client extends DomainModel<Client> {
 		this.federativeUnit = federativeUnit;
 	}
 
+	
 	public List<Policy> getPolicies() {
 		return policies;
 	}
@@ -71,12 +82,13 @@ public class Client extends DomainModel<Client> {
 	public void setPolicies(List<Policy> policies) {
 		this.policies = policies;
 	}
+	
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + Objects.hash(city, cpf, federativeUnit, fullName, policies);
+		result = prime * result + Objects.hash(city, cpf, federativeUnit, fullName);
 		return result;
 	}
 
@@ -88,18 +100,17 @@ public class Client extends DomainModel<Client> {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Client other = (Client) obj;
+		Customer other = (Customer) obj;
 		return Objects.equals(city, other.city) && Objects.equals(cpf, other.cpf)
-				&& Objects.equals(federativeUnit, other.federativeUnit) && Objects.equals(fullName, other.fullName)
-				&& Objects.equals(policies, other.policies);
+				&& Objects.equals(federativeUnit, other.federativeUnit) && Objects.equals(fullName, other.fullName);
 	}
 
 	@Override
 	public String toString() {
-		return String.format("Client [fullName=%s, cpf=%s, city=%s, federativeUnit=%s, policies=%s]", fullName, cpf,
-				city, federativeUnit, policies);
+		return String.format("Customer [fullName=%s, cpf=%s, city=%s, federativeUnit=%s]", fullName, cpf,
+				city, federativeUnit);
 	}
 
 	
-
+	
 }

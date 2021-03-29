@@ -7,5 +7,5 @@ import com.equiplano.application.domain.Policy;
 
 @Repository
 public interface PolicyRepository extends CrudRepository<Policy, Long>{
-
+	Policy findPolicyByPolicyNumber(String policyNumber);
 }

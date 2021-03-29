@@ -1,5 +1,5 @@
 CREATE TABLE `apolices` (
-  `id` BIGINT(20) NOT NULL,
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `cliente_id` BIGINT(20) NOT NULL,
   `numero_apolice` VARCHAR(100) NOT NULL,
   `inicio_vigencia` VARCHAR(45) NOT NULL,
@@ -15,6 +15,6 @@ CREATE TABLE `apolices` (
   UNIQUE INDEX `numero_apolice_UNIQUE` (`numero_apolice` ASC) VISIBLE,
   CONSTRAINT `cliente_id`
     FOREIGN KEY (`cliente_id`)
-    REFERENCES `policies`.`clientes` (`id`)
+    REFERENCES `clientes` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)

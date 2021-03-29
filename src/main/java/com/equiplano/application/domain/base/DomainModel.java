@@ -7,6 +7,7 @@ import java.util.TimeZone;
 
 import javax.persistence.Embedded;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
@@ -19,7 +20,7 @@ public class DomainModel<T extends DomainModel<T>> implements Serializable {
 	private static final long serialVersionUID = -4412839424426999064L;
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	@Embedded
