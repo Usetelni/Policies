@@ -19,10 +19,8 @@ import com.equiplano.application.services.customer.CustomerService;
 public class PolicyServiceImpl implements PolicyService{
 
 	private final PolicyRepository policyRepository;
-	private final CustomerService customerService;
 	private final PolicyRequestDTOToPolicyConverter policyRequestDTOToPolicyConverter;
 	private final PolicyToPolicyResponseDTO policyToPolicyResponseDTO;
-	private final CustomerResponseDTOToCustomerConverter customerResponseDTOToCustomerConverter;
 	private final CustomerRepository customerRepository;
 	
 	@Autowired
@@ -33,10 +31,8 @@ public class PolicyServiceImpl implements PolicyService{
 							 CustomerResponseDTOToCustomerConverter customerResponseDTOToCustomerConverter,
 							 CustomerRepository customerRepository) {
 		this.policyRepository = policyRepository;
-		this.customerService = customerService;
 		this.policyRequestDTOToPolicyConverter = policyRequestDTOToPolicyConverter;
 		this.policyToPolicyResponseDTO = policyToPolicyResponseDTO;
-		this.customerResponseDTOToCustomerConverter = customerResponseDTOToCustomerConverter;
 		this.customerRepository = customerRepository;
 	}
 
@@ -53,7 +49,7 @@ public class PolicyServiceImpl implements PolicyService{
 		 policyReponseDto = this.policyToPolicyResponseDTO.apply(policyResponse);
 		 
 		}catch(Exception e) {
-			throw new PolicyException(e.getMessage(), e.getCause());
+			throw new PolicyException("Houve um problema ao criar a apolice, favor validar os dados", e.getCause());
 		}
 		return policyReponseDto;
 	}

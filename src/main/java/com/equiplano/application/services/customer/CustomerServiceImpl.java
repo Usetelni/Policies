@@ -48,7 +48,7 @@ public class CustomerServiceImpl implements CustomerService{
 			Customer customerResponse = this.customerRepository.save(customer);
 			customerResponseDTO = this.customerToCustomerResponseDTOConverter.apply(customerResponse);
 		}catch(Exception e) {
-			throw new CustomerException(e.getMessage(), e.getCause());
+			throw new CustomerException("houve um erro ao cadastrar um cliente, favor verifique os dados", e.getCause());
 		}
 		return customerResponseDTO;
 	}
